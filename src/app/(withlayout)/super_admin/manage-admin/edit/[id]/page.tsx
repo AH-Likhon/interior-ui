@@ -3,20 +3,8 @@
 import FormDatePicker from "@/components/Forms/CustomDatePicker";
 import CustomInput from "@/components/Forms/CustomInput";
 import Form from "@/components/Forms/Form";
-import {
-  useGetSingleBookingQuery,
-  useUpdateBookingMutation,
-} from "@/redux/api/bookingApi";
 import { Col, Row, message, Button } from "antd";
 import React from "react";
-import dayjs from "dayjs";
-import CustomSelectField from "@/components/Forms/CustomSelectField";
-import { BookingStatusOptions, ServiceStatusOptions } from "@/constants/global";
-import {
-  useGetSingleServiceQuery,
-  useUpdateServiceMutation,
-} from "@/redux/api/serviceApi";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import {
   useGetSingleUserQuery,
@@ -29,7 +17,7 @@ type IDProps = {
 };
 
 const ManageUserEditPage = ({ params }: IDProps) => {
-  useVerifyUser("admin");
+  useVerifyUser("super_admin");
   const { id } = params;
 
   const { data, isLoading } = useGetSingleUserQuery(id);
@@ -53,9 +41,6 @@ const ManageUserEditPage = ({ params }: IDProps) => {
     address: data?.address || "",
     contactNo: data?.contactNo || "",
     name: data?.name || "",
-    // location: data?.location || "",
-    // price: data?.price || "",
-    // serviceStatus: data?.serviceStatus || "",
   };
   if (isLoading) {
     return <p>loading</p>;
@@ -66,12 +51,12 @@ const ManageUserEditPage = ({ params }: IDProps) => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "super admin",
+            link: "/super_admin",
           },
           {
-            label: "manage-service",
-            link: "/admin/manage-service",
+            label: "manage-admin",
+            link: "/super_admin/manage-admin",
           },
         ]}
       />
@@ -116,54 +101,9 @@ const ManageUserEditPage = ({ params }: IDProps) => {
             >
               <CustomInput type="text" name="name" size="large" label="Name" />
             </Col>
-            {/* <Col
-              className="gutter-row"
-              span={8}
-              style={{
-                marginBottom: "10px",
-              }}
-            >
-              <CustomInput
-                type="number"
-                name="price"
-                size="large"
-                label="Price"
-              />
-            </Col>
-            <Col
-              className="gutter-row"
-              span={8}
-              style={{
-                marginBottom: "10px",
-              }}
-            >
-              <CustomSelectField
-                options={ServiceStatusOptions}
-                name="serviceStatus"
-                size="large"
-                label="Service Status"
-              />
-            </Col>
-            <Col
-              className="gutter-row"
-              span={8}
-              style={{
-                marginBottom: "10px",
-              }}
-            >
-              <FormTextArea name="description" label="Description" />
-            </Col> */}
           </Row>
         </Row>
-        {/* <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
-          <Col span={8} style={{ margin: "10px 0" }}>
-            <FormDatePicker
-              defaultValue={defaultValues?.date}
-              name="date"
-              label="Update your date"
-            />
-          </Col>
-        </Row> */}
+
         <Button type="primary" ghost htmlType="submit">
           Update
         </Button>

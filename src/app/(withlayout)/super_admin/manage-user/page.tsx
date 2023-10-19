@@ -5,17 +5,27 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { message } from "antd";
 import CustomTable from "@/components/ui/CustomTable";
-import { useGetBookingQuery } from "@/redux/api/bookingApi";
 import { useVerifyUser } from "@/utils/customHooks";
+import ActionBar from "@/components/ui/ActionBar";
+import {
+  useDeleteServiceMutation,
+  useGetAllServiceQuery,
+} from "@/redux/api/serviceApi";
+import UMBreadCrumb from "@/components/ui/BreadCrumb";
+import CustomModal from "@/components/ui/CustomModal";
+import {
+  useDeleteSingleUserMutation,
+  useGetAllUserQuery,
+} from "@/redux/api/userApi";
 
-const BookingPage = () => {
-  useVerifyUser("customer");
+const ManageUserPage = () => {
+  useVerifyUser("super_admin");
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -23,6 +33,8 @@ const BookingPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -37,62 +49,49 @@ const BookingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading } = useGetBookingQuery({ ...query });
-  const bookings = data?.bookings;
+  const { data, isLoading } = useGetAllUserQuery({ ...query });
+  const [deleteService] = useDeleteSingleUserMutation();
+  const users = data?.users;
   const meta = data?.meta;
-  const updateBookings = bookings?.map((booking: any) => ({
-    id: booking?.id,
-    bookingStatus: booking?.bookingStatus,
-    createdAt: booking?.createdAt,
-    serviceStatus: booking?.service?.serviceStatus,
-    title: booking?.service?.title,
-    price: booking?.service?.price,
-    date: booking?.date,
-    location: booking?.service?.location,
-  }));
-  console.log(bookings, "checking booking data 1");
-  console.log(updateBookings, "checking booking data");
+
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      //   console.log(data);
-      //   const res = await deleteAcademicDepartment(id);
-      //   if (res) {
-      message.success("Department Deleted successfully");
-      //   }
+      const res = await deleteService(id);
+      // @ts-ignore
+      if (res?.data?.id) {
+        message.success("User Deleted successfully");
+        setOpen(false);
+      }
     } catch (err: any) {
-      //   console.error(err.message);
       message.error(err.message);
     }
   };
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: "Booking date",
-      dataIndex: "date",
-      render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
-      },
-      sorter: true,
+      title: "Name",
+      dataIndex: "name",
     },
     {
-      title: "Booking Status",
-      dataIndex: "bookingStatus",
-      //   render: function (data: any) {
-      //     return <>{data?.title}</>;
-      //   },
+      title: "Role",
+      dataIndex: "role",
+    },
+    // {
+    //   title: "Location",
+    //   dataIndex: "location",
+    // },
+    {
+      title: "Contact No",
+      dataIndex: "contactNo",
     },
     {
-      title: "Location",
-      dataIndex: "location",
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
+      title: "Address",
+      dataIndex: "address",
       sorter: true,
     },
     {
@@ -108,7 +107,7 @@ const BookingPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Link href={`/customer/booking/edit/${data?.id}`}>
+            <Link href={`/super_admin/manage-user/edit/${data?.id}`}>
               <Button
                 style={{
                   margin: "0px 5px",
@@ -121,7 +120,11 @@ const BookingPage = () => {
               </Button>
             </Link>
             <Button
-              onClick={() => deleteHandler(data?.id)}
+              onClick={() => {
+                setOpen(true);
+                setUserId(data?.id);
+              }}
+              // onClick={() => deleteHandler(data?.id)}
               type="primary"
               danger
             >
@@ -151,11 +154,44 @@ const BookingPage = () => {
   };
   return (
     <div>
-      <h1>booking page</h1>
+      <UMBreadCrumb
+        items={[
+          {
+            label: "admin",
+            link: "/admin",
+          },
+        ]}
+      />
+
+      <ActionBar title="Manage Admin page">
+        <Input
+          size="large"
+          placeholder="Search"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            width: "20%",
+          }}
+        />
+        <div>
+          {/* <Link href="/admin/manage-service/create">
+            <Button type="primary">Create service</Button>
+          </Link> */}
+          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            <Button
+              style={{ margin: "0px 5px" }}
+              type="primary"
+              ghost
+              onClick={resetFilters}
+            >
+              <ReloadOutlined />
+            </Button>
+          )}
+        </div>
+      </ActionBar>
       <CustomTable
         loading={isLoading}
         columns={columns}
-        dataSource={updateBookings}
+        dataSource={users}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -163,8 +199,16 @@ const BookingPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+      <CustomModal
+        title="Remove admin"
+        isOpen={open}
+        closeModal={() => setOpen(false)}
+        handleOk={() => deleteHandler(userId)}
+      >
+        <p className="my-5">Do you want to delete this user?</p>
+      </CustomModal>
     </div>
   );
 };
 
-export default BookingPage;
+export default ManageUserPage;

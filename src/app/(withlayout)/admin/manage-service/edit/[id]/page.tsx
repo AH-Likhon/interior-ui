@@ -1,47 +1,40 @@
 "use client";
 
-import FormDatePicker from "@/components/Forms/CustomDatePicker";
 import CustomInput from "@/components/Forms/CustomInput";
 import Form from "@/components/Forms/Form";
-import {
-  useGetSingleBookingQuery,
-  useUpdateBookingMutation,
-} from "@/redux/api/bookingApi";
+
 import { Col, Row, message, Button } from "antd";
 import React from "react";
-import dayjs from "dayjs";
 import CustomSelectField from "@/components/Forms/CustomSelectField";
-import { BookingStatusOptions, ServiceStatusOptions } from "@/constants/global";
+import { ServiceStatusOptions } from "@/constants/global";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
 } from "@/redux/api/serviceApi";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
-import {
-  useGetSingleUserQuery,
-  useUpdateUserMutation,
-} from "@/redux/api/userApi";
-import { useVerifyUser } from "@/utils/customHooks";
 
 type IDProps = {
   params: any;
 };
 
-const ManageUserEditPage = ({ params }: IDProps) => {
-  useVerifyUser("admin");
+const ServiceEdit = ({ params }: IDProps) => {
   const { id } = params;
 
-  const { data, isLoading } = useGetSingleUserQuery(id);
+  const { data, isLoading } = useGetSingleServiceQuery(id);
 
-  const [updateUser] = useUpdateUserMutation();
+  const [updateService] = useUpdateServiceMutation();
 
   const onSubmit = async (data: any) => {
+    // const tempObject = { ...values };
+    // tempObject["date"] = dayjs(tempObject["date"]).toISOString();
+    data["price"] = parseFloat(data["price"]);
+    console.log(data);
     try {
-      const res = await updateUser({ id, body: data });
+      const res = await updateService({ id, body: data });
       // @ts-ignore
       if (res?.data?.id) {
-        message.success("User data updated successfully");
+        message.success("Service data updated successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -50,12 +43,12 @@ const ManageUserEditPage = ({ params }: IDProps) => {
 
   // @ts-ignore
   const defaultValues = {
-    address: data?.address || "",
-    contactNo: data?.contactNo || "",
-    name: data?.name || "",
-    // location: data?.location || "",
-    // price: data?.price || "",
-    // serviceStatus: data?.serviceStatus || "",
+    title: data?.title || "",
+    description: data?.description || "",
+    category: data?.category || "",
+    location: data?.location || "",
+    price: data?.price || "",
+    serviceStatus: data?.serviceStatus || "",
   };
   if (isLoading) {
     return <p>loading</p>;
@@ -75,7 +68,7 @@ const ManageUserEditPage = ({ params }: IDProps) => {
           },
         ]}
       />
-      <h1>Update user data</h1>
+      <h1>Update your service data</h1>
       <Form submitHandler={onSubmit} defaultValues={defaultValues}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -88,9 +81,9 @@ const ManageUserEditPage = ({ params }: IDProps) => {
             >
               <CustomInput
                 type="text"
-                name="address"
+                name="title"
                 size="large"
-                label="Address"
+                label="Title"
               />
             </Col>
             <Col
@@ -102,9 +95,9 @@ const ManageUserEditPage = ({ params }: IDProps) => {
             >
               <CustomInput
                 type="text"
-                name="contactNo"
+                name="category"
                 size="large"
-                label="Contact No"
+                label="Category"
               />
             </Col>
             <Col
@@ -114,9 +107,14 @@ const ManageUserEditPage = ({ params }: IDProps) => {
                 marginBottom: "10px",
               }}
             >
-              <CustomInput type="text" name="name" size="large" label="Name" />
+              <CustomInput
+                type="text"
+                name="location"
+                size="large"
+                label="Location"
+              />
             </Col>
-            {/* <Col
+            <Col
               className="gutter-row"
               span={8}
               style={{
@@ -152,7 +150,7 @@ const ManageUserEditPage = ({ params }: IDProps) => {
               }}
             >
               <FormTextArea name="description" label="Description" />
-            </Col> */}
+            </Col>
           </Row>
         </Row>
         {/* <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -172,4 +170,4 @@ const ManageUserEditPage = ({ params }: IDProps) => {
   );
 };
 
-export default ManageUserEditPage;
+export default ServiceEdit;

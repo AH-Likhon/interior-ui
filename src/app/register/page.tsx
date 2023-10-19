@@ -81,7 +81,7 @@ const RegisterPage = () => {
                   name="confirmPassword"
                   type="password"
                   size="large"
-                  label="Confirm Password"
+                  label="Password"
                   required
                 />
               </div>

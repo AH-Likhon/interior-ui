@@ -18,7 +18,7 @@ type FormValues = {
   password: string;
 };
 const LoginPage = () => {
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { data: loginData }] = useLoginUserMutation();
 
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
 
       if (res?.accessToken) {
         message.success("User logged in successfully!");
-        router.back();
+        router.push("/");
       }
       storeUserInfo({ accessToken: res?.accessToken });
     } catch (err: any) {
@@ -78,7 +78,7 @@ const LoginPage = () => {
             </Form>
             <Link href="/register">
               <p style={{ marginTop: "10px" }}>
-                Have no account? Click to register
+                Have no account? Click here to register
               </p>
             </Link>
           </div>

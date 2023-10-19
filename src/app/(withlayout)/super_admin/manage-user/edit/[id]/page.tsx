@@ -29,7 +29,7 @@ type IDProps = {
 };
 
 const ManageUserEditPage = ({ params }: IDProps) => {
-  useVerifyUser("admin");
+  useVerifyUser("super_admin");
   const { id } = params;
 
   const { data, isLoading } = useGetSingleUserQuery(id);
@@ -66,12 +66,12 @@ const ManageUserEditPage = ({ params }: IDProps) => {
       <UMBreadCrumb
         items={[
           {
-            label: "admin",
-            link: "/admin",
+            label: "super admin",
+            link: "/super_admin",
           },
           {
             label: "manage-service",
-            link: "/admin/manage-service",
+            link: "/super_admin/manage-user",
           },
         ]}
       />
