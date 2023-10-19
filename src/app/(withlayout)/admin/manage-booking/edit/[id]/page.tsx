@@ -11,6 +11,7 @@ import React from "react";
 import dayjs from "dayjs";
 import CustomSelectField from "@/components/Forms/CustomSelectField";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
+import { BookingStatusOptions } from "@/constants/global";
 
 type IDProps = {
   params: any;
@@ -51,8 +52,8 @@ const BookingEdit = ({ params }: IDProps) => {
       <UMBreadCrumb
         items={[
           {
-            label: "my booking",
-            link: "/customer/booking",
+            label: "manage-booking",
+            link: "/admin/manage-booking",
           },
         ]}
       />
@@ -62,12 +63,7 @@ const BookingEdit = ({ params }: IDProps) => {
           <Col span={8} style={{ margin: "10px 0" }}>
             {/* <CustomInput name="bookingStatus" label="Booking Status" /> */}
             <CustomSelectField
-              options={[
-                {
-                  label: "Cancel",
-                  value: "cancel",
-                },
-              ]}
+              options={BookingStatusOptions}
               name="bookingStatus"
               label="Booking Status"
             />

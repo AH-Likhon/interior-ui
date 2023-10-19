@@ -13,6 +13,7 @@ import { message } from "antd";
 import CustomTable from "@/components/ui/CustomTable";
 import { useGetBookingQuery } from "@/redux/api/bookingApi";
 import { useVerifyUser } from "@/utils/customHooks";
+import UMBreadCrumb from "@/components/ui/BreadCrumb";
 
 const BookingPage = () => {
   useVerifyUser("customer");
@@ -50,21 +51,6 @@ const BookingPage = () => {
     date: booking?.date,
     location: booking?.service?.location,
   }));
-  console.log(bookings, "checking booking data 1");
-  console.log(updateBookings, "checking booking data");
-  const deleteHandler = async (id: string) => {
-    message.loading("Deleting.....");
-    try {
-      //   console.log(data);
-      //   const res = await deleteAcademicDepartment(id);
-      //   if (res) {
-      message.success("Department Deleted successfully");
-      //   }
-    } catch (err: any) {
-      //   console.error(err.message);
-      message.error(err.message);
-    }
-  };
 
   const columns = [
     {
@@ -120,13 +106,6 @@ const BookingPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button
-              onClick={() => deleteHandler(data?.id)}
-              type="primary"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
           </>
         );
       },
@@ -151,6 +130,14 @@ const BookingPage = () => {
   };
   return (
     <div>
+      <UMBreadCrumb
+        items={[
+          {
+            label: "customer",
+            link: "/customer",
+          },
+        ]}
+      />
       <h1>booking page</h1>
       <CustomTable
         loading={isLoading}

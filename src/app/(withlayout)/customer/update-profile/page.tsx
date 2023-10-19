@@ -1,65 +1,44 @@
 "use client";
 
-import FormDatePicker from "@/components/Forms/CustomDatePicker";
 import CustomInput from "@/components/Forms/CustomInput";
 import Form from "@/components/Forms/Form";
-import { Col, Row, message, Button } from "antd";
-import React from "react";
 import UMBreadCrumb from "@/components/ui/BreadCrumb";
 import {
-  useGetSingleUserQuery,
-  useUpdateUserMutation,
+  useMyProfileQuery,
+  useUpdateMyProfileMutation,
 } from "@/redux/api/userApi";
 import { useVerifyUser } from "@/utils/customHooks";
-import CustomSelectField from "@/components/Forms/CustomSelectField";
-import { UserRole } from "@/constants/global";
+import { Button, Col, Row, message } from "antd";
 
-type IDProps = {
-  params: any;
-};
+const UpdateProfilePage = () => {
+  useVerifyUser("customer");
+  const { data, isLoading } = useMyProfileQuery("");
 
-const ManageUserEditPage = ({ params }: IDProps) => {
-  useVerifyUser("super_admin");
-  const { id } = params;
-
-  const { data, isLoading } = useGetSingleUserQuery(id);
-
-  const [updateUser] = useUpdateUserMutation();
-
+  const [updateMyProfile] = useUpdateMyProfileMutation();
   const onSubmit = async (data: any) => {
     try {
-      const res = await updateUser({ id, body: data });
+      const res = await updateMyProfile({ body: data });
       // @ts-ignore
       if (res?.data?.id) {
         message.success("User data updated successfully");
       }
     } catch (err: any) {
+      console.log(err, "checking error");
       message.error(err.message);
     }
   };
-
-  // @ts-ignore
   const defaultValues = {
     address: data?.address || "",
     contactNo: data?.contactNo || "",
     name: data?.name || "",
-    role: data?.role || "",
   };
-  if (isLoading) {
-    return <p>loading</p>;
-  }
-
   return (
     <div>
       <UMBreadCrumb
         items={[
           {
-            label: "super admin",
-            link: "/super_admin",
-          },
-          {
-            label: "manage-admin",
-            link: "/super_admin/manage-admin",
+            label: "Customer",
+            link: "/customer",
           },
         ]}
       />
@@ -104,29 +83,15 @@ const ManageUserEditPage = ({ params }: IDProps) => {
             >
               <CustomInput type="text" name="name" size="large" label="Name" />
             </Col>
-            <Col
-              className="gutter-row"
-              span={8}
-              style={{
-                marginBottom: "10px",
-              }}
-            >
-              <CustomSelectField
-                options={UserRole}
-                name="role"
-                size="large"
-                label="Role"
-              />
-            </Col>
           </Row>
         </Row>
 
-        <Button type="primary" ghost htmlType="submit">
-          Update
+        <Button type="primary" htmlType="submit" ghost>
+          Update your profile
         </Button>
       </Form>
     </div>
   );
 };
 
-export default ManageUserEditPage;
+export default UpdateProfilePage;

@@ -21,10 +21,10 @@ const CreateServicePage = () => {
     try {
       data["price"] = parseFloat(data["price"]);
       const res = await createService(data);
-      console.log(res, "checking response");
+
       // @ts-ignore
       if (res?.data?.id) {
-        message.success("Admin created successfully!");
+        message.success("Service created successfully!");
       }
     } catch (err: any) {
       console.error(err.message);

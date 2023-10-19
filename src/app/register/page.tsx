@@ -107,7 +107,7 @@ const RegisterPage = () => {
                   name="contactNo"
                   type="text"
                   size="large"
-                  label="Contact No."
+                  label="Contact No"
                   required
                 />
               </div>

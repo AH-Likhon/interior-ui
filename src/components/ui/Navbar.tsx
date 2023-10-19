@@ -1,11 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import { Island_Moments } from "next/font/google";
 
 const Navbar = () => {
+  const router = useRouter();
+  // @ts-ignore
+  const { role } = getUserInfo();
+  const [isLogout, setIsLogout] = useState(false);
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  // if (!role) {
+  //   router.push("/login");
+  // }
+  const handleDashboard = () => {
+    if (!role) {
+      router.push("/login");
+    } else {
+      // const lowerCaseRole = role.toLowerCase();
+      // console.log(lowerCaseRole);
+      router.push(`/${role.toLowerCase()}`);
+    }
+  };
+
+  useEffect(() => {}, [role, isLogout]);
+
+  const handleLogout = () => {
+    removeUserInfo("accessToken");
+    setIsLogout(true);
+  };
+  console.log(role, "checking role");
   return (
     <div>
       <nav className={styles.navigation}>
@@ -32,18 +59,32 @@ const Navbar = () => {
           </svg>
         </button>
         <div
+          style={{ zIndex: "5" }}
           className={`${styles.navigationMenu} ${
             isNavExpanded ? styles.expanded : ""
           }`}
         >
           <ul>
-            <li>
-              <Link href="/login">Login</Link>
+            {!role && (
+              <li style={{ color: "black " }}>
+                <Link href="/login">Login</Link>
+              </li>
+            )}
+            {role && (
+              <li
+                style={{ cursor: "pointer", color: "black" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </li>
+            )}
+            <li
+              style={{ cursor: "pointer", color: "black" }}
+              onClick={handleDashboard}
+            >
+              Dashboard
             </li>
-            <li>
-              <Link href="/about">About</Link>
-            </li>
-            <li>
+            <li style={{ color: "black " }}>
               <Link href="/contact">Contact</Link>
             </li>
           </ul>

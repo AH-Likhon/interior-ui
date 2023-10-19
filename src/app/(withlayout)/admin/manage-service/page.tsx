@@ -60,7 +60,9 @@ const ManageServicePage = () => {
         setOpen(false);
       }
     } catch (err: any) {
+      console.log(err);
       message.error(err.message);
+      setOpen(false);
     }
   };
 
@@ -199,7 +201,7 @@ const ManageServicePage = () => {
         closeModal={() => setOpen(false)}
         handleOk={() => deleteHandler(serviceId)}
       >
-        <p className="my-5">Do you want to remove this admin?</p>
+        <p className="my-5">Do you want to remove this service?</p>
       </CustomModal>
     </div>
   );

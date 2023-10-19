@@ -35,6 +35,14 @@ const bookingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.booking],
     }),
+    createBooking: build.mutation({
+      query: (data) => ({
+        url: `${BOOKING_URL}`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.booking],
+    }),
   }),
 });
 
@@ -42,4 +50,5 @@ export const {
   useGetBookingQuery,
   useGetSingleBookingQuery,
   useUpdateBookingMutation,
+  useCreateBookingMutation,
 } = bookingApi;

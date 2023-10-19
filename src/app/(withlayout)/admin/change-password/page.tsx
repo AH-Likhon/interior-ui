@@ -19,7 +19,6 @@ const ChangePasswordPage = () => {
   const { id } = getUserInfo();
 
   const onSubmit = async (data: any) => {
-    message.loading("Creating...");
     try {
       const res = await updateUserPassword({ body: data });
 
@@ -27,8 +26,14 @@ const ChangePasswordPage = () => {
       if (res?.data?.id) {
         message.success("Password updated successfully!");
       }
+
+      // @ts-ignore
+      if (error?.statusCode !== 200) {
+        // @ts-ignore
+        message.error(error?.message);
+      }
     } catch (err: any) {
-      console.error(err.message);
+      message.error(err.message);
     }
   };
 

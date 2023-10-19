@@ -7,6 +7,7 @@ import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { useMyProfileQuery } from "@/redux/api/userApi";
+import Link from "next/link";
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
@@ -24,6 +25,14 @@ const Header = () => {
         <Button onClick={logOut} type="text" danger>
           Logout
         </Button>
+      ),
+    },
+    {
+      key: "1",
+      label: (
+        <Link href="/">
+          <Button type="text">Home</Button>
+        </Link>
       ),
     },
   ];

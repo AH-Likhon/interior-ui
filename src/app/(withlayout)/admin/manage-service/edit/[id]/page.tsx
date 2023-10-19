@@ -162,7 +162,7 @@ const ServiceEdit = ({ params }: IDProps) => {
             />
           </Col>
         </Row> */}
-        <Button type="primary" ghost htmlType="submit">
+        <Button type="primary" htmlType="submit" ghost>
           Update
         </Button>
       </Form>

@@ -11,7 +11,11 @@ import { Col, Row, message, Button } from "antd";
 import React from "react";
 import dayjs from "dayjs";
 import CustomSelectField from "@/components/Forms/CustomSelectField";
-import { BookingStatusOptions, ServiceStatusOptions } from "@/constants/global";
+import {
+  BookingStatusOptions,
+  ServiceStatusOptions,
+  UserRole,
+} from "@/constants/global";
 import {
   useGetSingleServiceQuery,
   useUpdateServiceMutation,
@@ -53,9 +57,7 @@ const ManageUserEditPage = ({ params }: IDProps) => {
     address: data?.address || "",
     contactNo: data?.contactNo || "",
     name: data?.name || "",
-    // location: data?.location || "",
-    // price: data?.price || "",
-    // serviceStatus: data?.serviceStatus || "",
+    role: data?.role || "",
   };
   if (isLoading) {
     return <p>loading</p>;
@@ -116,6 +118,21 @@ const ManageUserEditPage = ({ params }: IDProps) => {
             >
               <CustomInput type="text" name="name" size="large" label="Name" />
             </Col>
+            <Col
+              className="gutter-row"
+              span={8}
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              <CustomSelectField
+                options={UserRole}
+                name="role"
+                size="large"
+                label="Role"
+              />
+            </Col>
+
             {/* <Col
               className="gutter-row"
               span={8}

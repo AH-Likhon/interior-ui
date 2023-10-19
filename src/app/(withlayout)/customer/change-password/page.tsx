@@ -14,21 +14,26 @@ import React from "react";
 
 const ChangePasswordPage = () => {
   useVerifyUser("customer");
-  const [updateUserPassword] = useUpdateUserPasswordMutation();
+  const [updateUserPassword, { error }] = useUpdateUserPasswordMutation();
   // @ts-ignore
-  const { id } = getUserInfo();
+  // const { id } = getUserInfo();
 
   const onSubmit = async (data: any) => {
-    message.loading("Creating...");
+    message.loading("updating...");
     try {
       const res = await updateUserPassword({ body: data });
-
+      console.log(res, "checking resposne");
       // @ts-ignore
       if (res?.data?.id) {
         message.success("Password updated successfully!");
       }
+      // @ts-ignore
+      if (error?.statusCode !== 200) {
+        // @ts-ignore
+        message.error(error?.message);
+      }
     } catch (err: any) {
-      console.error(err.message);
+      message.error(err.message);
     }
   };
 

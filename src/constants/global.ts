@@ -12,6 +12,17 @@ export const BookingStatusOptions = [
     value: "cancel",
   },
 ];
+
+export const UserRole = [
+  {
+    label: "Admin",
+    value: "ADMIN",
+  },
+  {
+    label: "Customer",
+    value: "CUSTOMER",
+  },
+];
 export const ServiceStatusOptions = [
   {
     label: "Available",

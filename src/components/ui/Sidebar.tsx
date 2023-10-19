@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+
 import { Layout, Menu, theme } from "antd";
 import { getUserInfo } from "@/services/auth.service";
 import { sidebarItems } from "@/constants/sidebarItems";
@@ -79,5 +75,5 @@ const DashboardSidebar = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(DashboardSidebar), { ssr: false });
-// export default DashboardSidebar;
+// export default dynamic(() => Promise.resolve(DashboardSidebar), { ssr: false });
+export default DashboardSidebar;
