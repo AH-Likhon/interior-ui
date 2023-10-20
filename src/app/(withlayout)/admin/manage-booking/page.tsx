@@ -50,12 +50,17 @@ const BookingPage = () => {
     price: booking?.service?.price,
     date: booking?.date,
     location: booking?.service?.location,
+    user: booking?.user?.email,
   }));
 
   const columns = [
     {
       title: "Title",
       dataIndex: "title",
+    },
+    {
+      title: "User",
+      dataIndex: "user",
     },
     {
       title: "Booking date",

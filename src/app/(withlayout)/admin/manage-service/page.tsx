@@ -60,7 +60,7 @@ const ManageServicePage = () => {
         setOpen(false);
       }
     } catch (err: any) {
-      console.log(err);
+      // console.log(err);
       message.error(err.message);
       setOpen(false);
     }
@@ -168,9 +168,7 @@ const ManageServicePage = () => {
         />
         <div>
           <Link href="/admin/manage-service/create">
-            <Button type="primary" ghost>
-              Create service
-            </Button>
+            <Button type="primary">Create service</Button>
           </Link>
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button

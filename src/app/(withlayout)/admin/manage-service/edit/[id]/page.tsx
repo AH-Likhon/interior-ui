@@ -29,7 +29,7 @@ const ServiceEdit = ({ params }: IDProps) => {
     // const tempObject = { ...values };
     // tempObject["date"] = dayjs(tempObject["date"]).toISOString();
     data["price"] = parseFloat(data["price"]);
-    console.log(data);
+    // console.log(data);
     try {
       const res = await updateService({ id, body: data });
       // @ts-ignore

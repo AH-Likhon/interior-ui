@@ -84,9 +84,9 @@ const Navbar = () => {
             >
               Dashboard
             </li>
-            <li style={{ color: "black " }}>
+            {/* <li style={{ color: "black " }}>
               <Link href="/contact">Contact</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>

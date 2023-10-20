@@ -1,22 +1,21 @@
-import { Button, Card, Col, Row } from "antd";
+import { Card, Col, Row } from "antd";
 import Image from "next/image";
 import img4 from "../../assets/slider-4-min.jpg";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
-import Link from "next/link";
 
-const CustomCard = () => {
+const CustomUpcomingCard = () => {
   const { data, isLoading } = useGetAllServiceQuery({ limit: 15 });
   const services = data?.services;
   if (isLoading) {
     return <p>loading</p>;
   }
   const availableService = services?.filter(
-    (service: any) => service?.serviceStatus === "Available"
+    (service: any) => service?.serviceStatus === "Upcoming"
   );
 
   return (
     <div style={{ padding: "25px" }}>
-      <h1 style={{ margin: "15px 0" }}>Available Services</h1>
+      <h1 style={{ margin: "15px 0" }}>Upcoming Services</h1>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         {availableService?.map((service: any) => (
           <>
@@ -52,9 +51,9 @@ const CustomCard = () => {
                   </p>
                   <p>Price: {service?.price}</p>
 
-                  <Button type="primary">
+                  {/* <Button type="primary">
                     <Link href={`details/${service?.id}`}>Details</Link>
-                  </Button>
+                  </Button> */}
                 </Card>
               </div>
             </Col>
@@ -65,4 +64,4 @@ const CustomCard = () => {
   );
 };
 
-export default CustomCard;
+export default CustomUpcomingCard;

@@ -11,6 +11,9 @@ const SuperAdminPage = () => {
   useVerifyUser("super_admin");
 
   const { data, isLoading } = useMyProfileQuery("");
+
+  // console.log("Data", data);
+
   if (isLoading) {
     return <p>loading</p>;
   }
@@ -33,7 +36,7 @@ const SuperAdminPage = () => {
       </div>
       <Link href="/super_admin/update-profile">
         <Button type="primary" ghost>
-          Update your profile
+          Update my profile
         </Button>
       </Link>
     </div>

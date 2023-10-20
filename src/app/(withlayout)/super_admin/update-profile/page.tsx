@@ -88,8 +88,8 @@ const UpdateProfilePage = () => {
           </Row>
         </Row>
 
-        <Button type="primary" ghost htmlType="submit">
-          Update your profile
+        <Button type="primary" htmlType="submit" ghost>
+          Update my profile
         </Button>
       </Form>
     </div>

@@ -72,13 +72,13 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              <Button type="primary" ghost htmlType="submit">
+              <Button type="primary" htmlType="submit" ghost>
                 Login
               </Button>
             </Form>
             <Link href="/register">
               <p style={{ marginTop: "10px" }}>
-                Not registered? Click to register
+                Have no account? Click to here register
               </p>
             </Link>
           </div>

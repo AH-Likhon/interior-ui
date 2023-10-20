@@ -23,7 +23,7 @@ const UpdateProfilePage = () => {
         message.success("User data updated successfully");
       }
     } catch (err: any) {
-      console.log(err, "checking error");
+      // console.log(err, "checking error");
       message.error(err.message);
     }
   };

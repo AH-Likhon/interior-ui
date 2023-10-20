@@ -163,7 +163,7 @@ const ManageUserPage = () => {
         ]}
       />
 
-      <ActionBar title="Manage Admin page">
+      <ActionBar title="Manage User page">
         <Input
           size="large"
           placeholder="Search"

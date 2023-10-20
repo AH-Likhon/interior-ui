@@ -32,9 +32,7 @@ const CustomerPage = () => {
         <p style={{ margin: "10px 0" }}>Your contact No: {data?.contactNo}</p>
       </div>
       <Link href="/customer/update-profile">
-        <Button type="primary" ghost>
-          Update your profile
-        </Button>
+        <Button type="primary" ghost>Update your profile</Button>
       </Link>
     </div>
   );

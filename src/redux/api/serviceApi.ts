@@ -14,27 +14,6 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.service],
     }),
-    getAllService: build.query({
-      query: (args) => ({
-        url: SERVICE_URL,
-        method: "GET",
-        params: args,
-      }),
-      transformResponse: (response: any, meta: IMeta) => {
-        return {
-          services: response,
-          meta,
-        };
-      },
-      providesTags: [tagTypes.service],
-    }),
-    getSingleService: build.query({
-      query: (id: string | string[] | undefined) => ({
-        url: `${SERVICE_URL}/${id}`,
-        method: "GET",
-      }),
-      providesTags: [tagTypes.service],
-    }),
     updateService: build.mutation({
       query: (data) => ({
         url: `${SERVICE_URL}/${data.id}`,
@@ -49,6 +28,28 @@ export const serviceApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: [tagTypes.service],
+    }),
+    getAllService: build.query({
+      query: (args) => ({
+        url: SERVICE_URL,
+        method: "GET",
+        params: args,
+      }),
+      transformResponse: (response: any, meta: IMeta) => {
+        return {
+          services: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.service],
+    }),
+
+    getSingleService: build.query({
+      query: (id: string | string[] | undefined) => ({
+        url: `${SERVICE_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.service],
     }),
   }),
 });

@@ -22,7 +22,7 @@ const ChangePasswordPage = () => {
     message.loading("updating...");
     try {
       const res = await updateUserPassword({ body: data });
-      console.log(res, "checking resposne");
+      // console.log(res, "checking resposne");
       // @ts-ignore
       if (res?.data?.id) {
         message.success("Password updated successfully!");

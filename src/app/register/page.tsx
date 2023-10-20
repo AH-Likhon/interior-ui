@@ -81,7 +81,7 @@ const RegisterPage = () => {
                   name="confirmPassword"
                   type="password"
                   size="large"
-                  label="Password"
+                  label="Confirm Password"
                   required
                 />
               </div>
@@ -107,7 +107,7 @@ const RegisterPage = () => {
                   name="contactNo"
                   type="text"
                   size="large"
-                  label="Contact No"
+                  label="Contact No."
                   required
                 />
               </div>
@@ -124,7 +124,7 @@ const RegisterPage = () => {
                   required
                 />
               </div>
-              <Button type="primary" ghost htmlType="submit">
+              <Button type="primary" htmlType="submit" ghost>
                 Register
               </Button>
             </Form>
